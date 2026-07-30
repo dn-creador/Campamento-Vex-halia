@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Campamento Vex'Halia</title>
 
 <link rel="stylesheet" href="style.css">
@@ -15,125 +19,76 @@
 
 <header>
 
-<div class="logo">
-🏛️
-</div>
+<div class="titulo">
 
-<h1>CAMPAMENTO VEX'HALIA</h1>
+<h1>🏛️ CAMPAMENTO VEX'HALIA</h1>
 
 <p>Los Archivos del Imperio</p>
 
+</div>
+
 </header>
 
-<main>
+<div id="contenedor">
 
-<section id="hero">
+<aside id="menu">
 
-<h2>Salve, semidiós.</h2>
+<h2>MENÚ</h2>
 
-<p>
+<button data-seccion="inicio">🏠 Inicio</button>
 
-Soy <strong>Alexios</strong>, Guardián de los Archivos.
+<button data-seccion="alexios">🤖 Alexios</button>
 
-</p>
+<button data-seccion="registro">📜 Registro</button>
 
-<p>
+<button data-seccion="biblioteca">📚 Biblioteca</button>
 
-Custodio la historia, las leyes y el conocimiento del Campamento Vex'Halia.
+<button data-seccion="casas">🏛️ Casas Divinas</button>
 
-</p>
+<button data-seccion="poderes">⚔️ Poderes</button>
 
-<button id="abrirAlexios">
+<button data-seccion="clases">🎖️ Clases</button>
 
-🤖 Hablar con Alexios
+<button data-seccion="economia">💰 Economía</button>
 
-</button>
+<button data-seccion="mercado">🏪 Mercado</button>
 
-</section>
+<button data-seccion="roma">🌍 Nueva Roma</button>
 
-<nav id="menu">
+<button data-seccion="reglamento">📖 Reglamento</button>
 
-<button data="inicio">
-🏠
-<span>Inicio</span>
-</button>
+<button data-seccion="grupos">🔗 Grupos</button>
 
-<button data="registro">
-📜
-<span>Registro</span>
-</button>
+</aside>
 
-<button data="biblioteca">
-📚
-<span>Biblioteca</span>
-</button>
+<main id="principal">
 
-<button data="casas">
-🏛️
-<span>Casas Divinas</span>
-</button>
+<section id="contenido">
 
-<button data="clases">
-🎖️
-<span>Clases</span>
-</button>
-
-<button data="mercado">
-🏪
-<span>Mercado</span>
-</button>
-
-<button data="economia">
-💰
-<span>Economía</span>
-</button>
-
-<button data="roma">
-🌍
-<span>Nueva Roma</span>
-</button>
-
-<button data="reglamento">
-📖
-<span>Reglamento</span>
-</button>
-
-<button data="grupos">
-🔗
-<span>Grupos</span>
-</button>
-
-</nav>
-
-<section id="panel">
-
-<div id="contenido">
-
-<h2>🏛️ Bienvenido</h2>
+<h2>Bienvenido al Campamento Vex'Halia</h2>
 
 <p>
 
-Selecciona una opción del menú para comenzar tu recorrido por el Campamento Vex'Halia.
+Selecciona una sección del menú para comenzar.
 
 </p>
-
-</div>
 
 </section>
 
 </main>
 
-<footer>
+</div>
 
-<p>
+<footer>
 
 Campamento Vex'Halia © 2026
 
-</p>
-
 </footer>
+
+<script src="datos.js"></script>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
