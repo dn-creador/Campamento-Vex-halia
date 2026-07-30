@@ -174,7 +174,7 @@ html+=`<input type="${campo.tipo}">`;
 
 html+=`
 
-<button>
+<button id="enviarRegistro">
 
 Enviar Solicitud
 
@@ -185,6 +185,40 @@ Enviar Solicitud
 contenido.innerHTML=html;
 
 }
+
+document.getElementById("enviarRegistro").onclick=()=>{
+
+const datos={
+
+id:generarID(),
+
+estado:"Pendiente",
+
+fecha:new Date().toLocaleDateString(),
+
+nivel:1,
+
+rango:"Probati",
+
+denarios:0,
+
+aureos:0,
+
+inventario:[]
+
+};
+
+document.querySelectorAll("#contenido input,#contenido textarea,#contenido select")
+
+.forEach((campo,i)=>{
+
+datos[REGISTRO.campos[i].id]=campo.value;
+
+});
+
+guardarPersonaje(datos);
+
+};
 
 document.querySelectorAll("#menu button").forEach(btn=>{
 
@@ -247,3 +281,35 @@ break;
 });
 
 inicio();
+
+function generarID(){
+
+const numero=PERSONAJES.length+1;
+
+return "VXH-"+numero.toString().padStart(4,"0");
+
+}
+
+function guardarPersonaje(datos){
+
+PERSONAJES.push(datos);
+
+localStorage.setItem("personajes",JSON.stringify(PERSONAJES));
+
+alert("Solicitud enviada correctamente.");
+
+}
+
+function cargarPersonajes(){
+
+const datos=localStorage.getItem("personajes");
+
+if(datos){
+
+PERSONAJES.splice(0,PERSONAJES.length,...JSON.parse(datos));
+
+}
+
+}
+
+cargarPersonajes();
