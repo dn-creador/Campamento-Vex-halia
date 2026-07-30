@@ -1,224 +1,178 @@
-/* =======================================================
+/* ==========================================
    CAMPAMENTO VEX'HALIA
-   Versión 0.1
-======================================================= */
+   SCRIPT.JS - V0.2
+========================================== */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+const contenido = document.getElementById("contenido");
 
-body{
+const paginas = {
 
-    font-family:Georgia,serif;
+alexios:`
 
-    background:
-    linear-gradient(rgba(30,20,10,.75),rgba(30,20,10,.75)),
-    url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80");
+<h2>🤖 Alexios</h2>
 
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
+<p>
+Salve, semidiós.
+</p>
 
-    color:#f5e8c8;
+<p>
+Soy Alexios, Guardián de los Archivos del Campamento Vex'Halia.
+</p>
 
-}
+<p>
+Muy pronto podrás hablar conmigo para resolver todas tus dudas.
+</p>
 
-/* ================= HEADER ================= */
+<button disabled>💬 Chat (Próximamente)</button>
 
-header{
+`,
 
-    text-align:center;
+registro:`
 
-    padding:50px 20px;
+<h2>📜 Registro</h2>
 
-    background:rgba(0,0,0,.45);
+<p>
+Aquí podrás crear tu ficha oficial.
+</p>
 
-    border-bottom:4px solid #c9a227;
+<p>
+En la próxima versión aparecerá el formulario completo.
+</p>
 
-}
+<button disabled>
+📋 Crear ficha
+</button>
 
-header h1{
+`,
 
-    font-size:clamp(2rem,5vw,4rem);
+biblioteca:`
 
-    letter-spacing:3px;
+<h2>📚 Biblioteca</h2>
 
-}
+<p>Selecciona un tema.</p>
 
-header p{
+<ul>
 
-    margin-top:10px;
+<li>📖 Historia</li>
 
-    color:#e7d7a5;
+<li>📜 Reglamento</li>
 
-    font-size:1.2rem;
+<li>🎖️ Clases</li>
 
-}
+<li>🏛️ Casas Divinas</li>
 
-/* ================= CONTENIDO ================= */
+<li>💰 Economía</li>
 
-main{
+<li>🏪 Mercado</li>
 
-    width:90%;
+<li>🌍 Nueva Roma</li>
 
-    max-width:1200px;
+<li>🔗 Grupos</li>
 
-    margin:auto;
+</ul>
 
-}
+`,
 
-/* ================= BIENVENIDA ================= */
+casas:`
 
-#bienvenida{
+<h2>🏛️ Casas Divinas</h2>
 
-    margin-top:40px;
+<p>
 
-    background:rgba(245,232,200,.95);
+Aquí aparecerán las doce Casas Divinas con su historia, símbolos y poderes.
 
-    color:#3d2d1f;
+</p>
 
-    padding:35px;
+`,
 
-    border-radius:20px;
+clases:`
 
-    text-align:center;
+<h2>🎖️ Clases</h2>
 
-    box-shadow:0 0 20px rgba(0,0,0,.35);
+<ul>
 
-}
+<li>Probati</li>
 
-#bienvenida h2{
+<li>Legionario</li>
 
-    font-size:2rem;
+<li>Centurión</li>
 
-    margin-bottom:15px;
+<li>Campeón Divino</li>
 
-}
+</ul>
 
-#bienvenida p{
+`,
 
-    line-height:1.8;
+economia:`
 
-    margin-bottom:12px;
+<h2>💰 Economía</h2>
 
-}
+<p>
 
-/* ================= BOTÓN ALEXIOS ================= */
+Aquí aprenderás cómo conseguir dinero y en qué gastarlo.
 
-#btnAlexios{
+</p>
 
-    margin-top:20px;
+`,
 
-    background:#8b0000;
+mercado:`
 
-    color:white;
+<h2>🏪 Mercado</h2>
 
-    border:none;
+<p>
 
-    padding:15px 35px;
+Aquí estarán todos los objetos disponibles para comprar.
 
-    border-radius:12px;
+</p>
 
-    font-size:1rem;
+`,
 
-    cursor:pointer;
+roma:`
 
-    transition:.3s;
+<h2>🌍 Nueva Roma</h2>
 
-}
+<p>
 
-#btnAlexios:hover{
+La ciudad donde los semidioses retirados podrán vivir.
 
-    background:#b8860b;
+</p>
 
-    transform:scale(1.05);
+`,
 
-}
+reglamento:`
 
-/* ================= MENÚ ================= */
+<h2>📖 Reglamento</h2>
 
-#menu{
+<p>
 
-    margin:50px 0;
+Aquí aparecerá el reglamento completo del Campamento.
 
-    display:grid;
+</p>
 
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+`,
 
-    gap:20px;
+grupos:`
 
-}
+<h2>🔗 Grupos Oficiales</h2>
 
-.opcion{
+<p>
 
-    background:rgba(245,232,200,.96);
+Aquí aparecerán todos los enlaces de WhatsApp.
 
-    color:#3b2a1a;
+</p>
 
-    border:none;
+`
 
-    border-radius:15px;
+};
 
-    padding:25px;
+document.querySelectorAll("#menu button").forEach(boton=>{
 
-    font-size:1.15rem;
+boton.addEventListener("click",()=>{
 
-    font-weight:bold;
+const panel=boton.dataset.panel;
 
-    cursor:pointer;
+contenido.innerHTML=paginas[panel];
 
-    transition:.25s;
+});
 
-    box-shadow:0 8px 15px rgba(0,0,0,.25);
-
-}
-
-.opcion:hover{
-
-    transform:translateY(-6px);
-
-    background:#fff6d8;
-
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-
-    text-align:center;
-
-    padding:30px;
-
-    background:rgba(0,0,0,.45);
-
-    color:#e4d7b0;
-
-}
-
-/* ================= CELULAR ================= */
-
-@media(max-width:700px){
-
-    header{
-
-        padding:35px 15px;
-
-    }
-
-    #bienvenida{
-
-        padding:25px;
-
-    }
-
-    .opcion{
-
-        font-size:1rem;
-
-        padding:20px;
-
-    }
-
-}
+});
