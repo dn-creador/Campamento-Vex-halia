@@ -1,250 +1,371 @@
-/* ==========================================
-   CAMPAMENTO VEX'HALIA
-   STYLE.CSS - V0.2
-========================================== */
+/*==================================================
+ CAMPAMENTO VEX'HALIA
+ STYLE.CSS V0.3
+==================================================*/
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+
+scroll-behavior:smooth;
+
 }
 
 body{
 
-    font-family:Georgia,serif;
+font-family:Georgia,serif;
 
-    color:#f5ecd7;
+background:#1f1711;
 
-    background:#1f140d;
+color:#f5ead1;
 
-    min-height:100vh;
+overflow-x:hidden;
 
 }
 
-/* Fondo */
+/*=================== FONDO ===================*/
 
 #fondo{
 
-    position:fixed;
+position:fixed;
 
-    inset:0;
+top:0;
+left:0;
 
-    background:
-    linear-gradient(rgba(20,15,10,.75),rgba(20,15,10,.75)),
-    url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80");
+width:100%;
+height:100%;
 
-    background-size:cover;
+background:
+linear-gradient(rgba(25,18,12,.82),rgba(25,18,12,.82)),
+url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80");
 
-    background-position:center;
+background-size:cover;
+background-position:center;
 
-    z-index:-1;
+z-index:-1;
 
 }
 
-/* Encabezado */
+/*=================== HEADER ===================*/
 
 header{
 
-    text-align:center;
+text-align:center;
 
-    padding:45px 20px;
+padding:50px 20px;
 
-    background:rgba(0,0,0,.45);
+background:rgba(0,0,0,.45);
 
-    border-bottom:4px solid #c49b3a;
+backdrop-filter:blur(5px);
 
-    backdrop-filter:blur(4px);
+border-bottom:4px solid #c8a03d;
+
+}
+
+.logo{
+
+font-size:65px;
+
+margin-bottom:10px;
 
 }
 
 header h1{
 
-    font-size:clamp(2rem,5vw,4rem);
+font-size:clamp(2.2rem,5vw,4.2rem);
 
-    letter-spacing:3px;
+letter-spacing:4px;
 
-    color:#ffe9a8;
+color:#ffe8a8;
+
+text-shadow:2px 2px 8px black;
 
 }
 
 header p{
 
-    margin-top:10px;
+margin-top:10px;
 
-    color:#f0ddb2;
+font-size:1.1rem;
 
-    font-size:1.1rem;
+color:#ead8af;
 
 }
 
-/* Contenedor */
+/*=================== CONTENIDO ===================*/
 
 main{
 
-    width:min(1200px,92%);
+width:min(1250px,92%);
 
-    margin:auto;
+margin:auto;
 
-    padding:40px 0;
-
-}
-
-/* Bienvenida */
-
-#inicio{
-
-    background:rgba(244,230,189,.95);
-
-    color:#3d2a1d;
-
-    padding:35px;
-
-    border-radius:20px;
-
-    text-align:center;
-
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
+padding:40px 0;
 
 }
 
-#inicio h2{
+/*=================== HERO ===================*/
 
-    font-size:2rem;
+#hero{
 
-    margin-bottom:15px;
+background:#efe2b7;
+
+color:#3b2819;
+
+padding:40px;
+
+border-radius:18px;
+
+text-align:center;
+
+box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+margin-bottom:35px;
 
 }
 
-#inicio p{
+#hero h2{
 
-    margin-top:10px;
+font-size:2rem;
 
-    line-height:1.8;
+margin-bottom:15px;
 
 }
 
-/* Menú */
+#hero p{
+
+line-height:1.8;
+
+margin-bottom:15px;
+
+}
+
+#abrirAlexios{
+
+margin-top:15px;
+
+background:#8b1e14;
+
+color:white;
+
+border:none;
+
+padding:16px 35px;
+
+font-size:1rem;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#abrirAlexios:hover{
+
+background:#b48a2a;
+
+transform:scale(1.05);
+
+}
+
+/*=================== MENU ===================*/
 
 #menu{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 
-    gap:18px;
+gap:18px;
 
-    margin:40px 0;
+margin-bottom:35px;
 
 }
 
 #menu button{
 
-    background:#efe2b5;
+background:#f0e1b0;
 
-    color:#382415;
+color:#3b2818;
 
-    border:none;
+border:none;
 
-    border-radius:14px;
+border-radius:15px;
 
-    padding:22px;
+padding:22px;
 
-    font-size:1.05rem;
+cursor:pointer;
 
-    font-weight:bold;
+transition:.25s;
 
-    cursor:pointer;
+display:flex;
 
-    transition:.25s;
+flex-direction:column;
 
-    box-shadow:0 8px 18px rgba(0,0,0,.25);
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+font-size:28px;
+
+font-weight:bold;
+
+box-shadow:0 8px 18px rgba(0,0,0,.25);
+
+}
+
+#menu button span{
+
+font-size:16px;
 
 }
 
 #menu button:hover{
 
-    transform:translateY(-6px);
+transform:translateY(-6px);
 
-    background:#fff4d4;
+background:#fff4cf;
 
 }
 
-/* Panel */
+/*=================== PANEL ===================*/
 
 #panel{
 
-    background:rgba(244,230,189,.97);
+background:#efe2b7;
 
-    color:#352417;
+color:#342113;
 
-    border-radius:20px;
+padding:35px;
 
-    min-height:350px;
+border-radius:18px;
 
-    padding:35px;
+min-height:450px;
 
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
+box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+animation:aparecer .4s;
 
 }
 
 #contenido h2{
 
-    margin-bottom:20px;
+margin-bottom:20px;
 
-    color:#5b2f08;
+font-size:2rem;
+
+color:#6d3d0e;
 
 }
 
 #contenido p{
 
-    line-height:1.8;
+line-height:1.8;
+
+margin-bottom:15px;
 
 }
 
-/* Footer */
+#contenido ul{
+
+margin-left:25px;
+
+line-height:2;
+
+}
+
+/*=================== FOOTER ===================*/
 
 footer{
 
-    margin-top:40px;
+margin-top:40px;
 
-    padding:25px;
+padding:25px;
 
-    text-align:center;
+text-align:center;
 
-    background:rgba(0,0,0,.45);
+background:rgba(0,0,0,.45);
 
-    color:#e9d7b4;
+color:#e8d7b3;
 
 }
 
-/* Responsive */
+/*=================== ANIMACIONES ===================*/
+
+@keyframes aparecer{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/*=================== CELULAR ===================*/
 
 @media(max-width:700px){
 
-    header{
+header{
 
-        padding:30px 15px;
+padding:35px 15px;
 
-    }
+}
 
-    #inicio{
+.logo{
 
-        padding:25px;
+font-size:50px;
 
-    }
+}
 
-    #panel{
+#hero{
 
-        padding:25px;
+padding:25px;
 
-    }
+}
 
-    #menu button{
+#panel{
 
-        padding:18px;
+padding:25px;
 
-        font-size:1rem;
+}
 
-    }
+#menu{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+#menu button{
+
+padding:18px;
+
+font-size:22px;
+
+}
+
+#menu button span{
+
+font-size:14px;
+
+}
 
 }
