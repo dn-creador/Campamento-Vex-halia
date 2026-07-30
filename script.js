@@ -313,3 +313,55 @@ PERSONAJES.splice(0,PERSONAJES.length,...JSON.parse(datos));
 }
 
 cargarPersonajes();
+
+/*=========================================
+ SISTEMA DE SESIÓN
+=========================================*/
+
+let usuarioActual = null;
+
+function iniciarSesion(correo, password){
+
+const usuario = USUARIOS.find(u =>
+u.correo === correo &&
+u.password === password
+);
+
+if(usuario){
+
+usuarioActual = usuario;
+
+localStorage.setItem(
+"usuarioActual",
+JSON.stringify(usuario)
+);
+
+return true;
+
+}
+
+return false;
+
+}
+
+function cerrarSesion(){
+
+usuarioActual = null;
+
+localStorage.removeItem("usuarioActual");
+
+}
+
+function cargarSesion(){
+
+const datos = localStorage.getItem("usuarioActual");
+
+if(datos){
+
+usuarioActual = JSON.parse(datos);
+
+}
+
+}
+
+cargarSesion();
