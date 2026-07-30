@@ -1,1 +1,84 @@
+/* ==========================================
+   CAMPAMENTO VEX'HALIA
+   Script - Versión 0.1
+========================================== */
 
+const botones = document.querySelectorAll(".opcion");
+
+botones.forEach(boton => {
+
+    boton.addEventListener("click", () => {
+
+        const nombre = boton.textContent.trim();
+
+        switch(nombre){
+
+            case "📜 Registro":
+                alert("📜 Registro\n\nEn la Versión 0.2 podrás llenar tu ficha y copiarla para enviarla al grupo Lobby.");
+                break;
+
+            case "📚 Biblioteca":
+                alert("📚 Biblioteca\n\nAquí podrás consultar las reglas, clases, economía y toda la información del Campamento.");
+                break;
+
+            case "🏛️ Casas Divinas":
+                alert("🏛️ Casas Divinas\n\nAquí encontrarás la información de cada dios y, próximamente, sus poderes.");
+                break;
+
+            case "⚔️ Poderes":
+                alert("⚔️ Poderes\n\nEsta sección estará disponible cuando terminemos los poderes de todas las casas.");
+                break;
+
+            case "🎖️ Clases":
+                alert("🎖️ Clases\n\nAquí verás los rangos:\n\n• Probati\n• Legionario\n• Centurión\n• Campeón Divino");
+                break;
+
+            case "💰 Economía":
+                alert("💰 Economía\n\nAquí aprenderás cómo conseguir dinero dentro del Campamento.");
+                break;
+
+            case "🏪 Mercado":
+                alert("🏪 Mercado\n\nAquí aparecerán todos los objetos que podrán comprarse.");
+                break;
+
+            case "🌍 Nueva Roma":
+                alert("🌍 Nueva Roma\n\nAquí conocerás la ciudad donde los semidioses podrán retirarse.");
+                break;
+
+            case "📖 Reglamento":
+                alert("📖 Reglamento\n\nAquí estará el reglamento completo del Campamento.");
+                break;
+
+            case "🔗 Grupos Oficiales":
+                alert("🔗 Grupos\n\nAquí aparecerán todos los enlaces oficiales del Campamento.");
+                break;
+
+        }
+
+    });
+
+});
+
+document.getElementById("btnAlexios").addEventListener("click", () => {
+
+    alert(
+`🏛️ Alexios
+
+Salve, semidiós.
+
+Aún estoy organizando los Archivos del Campamento Vex'Halia.
+
+Muy pronto podré responder todas tus preguntas sobre:
+
+• Casas Divinas
+• Reglamento
+• Mercado
+• Clases
+• Economía
+• Nueva Roma
+• Poderes
+
+Te espero pronto.`
+    );
+
+});
