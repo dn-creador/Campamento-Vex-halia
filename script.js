@@ -1,205 +1,324 @@
-/*==========================================
+/*=========================================
  CAMPAMENTO VEX'HALIA
- SCRIPT.JS V0.3
-==========================================*/
+ script.js V1.0
+=========================================*/
 
 const contenido = document.getElementById("contenido");
 
-const paginas = {
+function inicio(){
 
-inicio:`
-<h2>🏛️ Bienvenido</h2>
+contenido.innerHTML=`
 
-<p>Salve, semidiós.</p>
+<h2>🏛️ Bienvenido al Campamento Vex'Halia</h2>
 
-<p>Explora los Archivos del Campamento Vex'Halia utilizando el menú.</p>
-`,
+<p>
 
-alexios:`
-<h2>🤖 Alexios</h2>
+Bienvenido a los Archivos del Imperio.
 
-<p>Soy Alexios, Guardián de los Archivos.</p>
+</p>
 
-<p>En futuras versiones responderé automáticamente todas tus dudas sobre el Campamento.</p>
+<p>
 
-<div class="proximamente">
-🚧 Chat en desarrollo
+Selecciona una opción del menú para comenzar.
+
+</p>
+
+`;
+
+}
+
+function mostrarBiblioteca(){
+
+let html=`
+
+<h2>📚 Biblioteca</h2>
+
+<p>
+
+Selecciona un tema.
+
+</p>
+
+`;
+
+DATOS.biblioteca.forEach(libro=>{
+
+html+=`
+
+<div class="tarjeta">
+
+<h3>${libro.titulo}</h3>
+
+<p>${libro.texto}</p>
+
 </div>
-`,
 
-registro:`
+`;
+
+});
+
+contenido.innerHTML=html;
+
+}
+
+function mostrarCasas(){
+
+let html=`
+
+<h2>🏛️ Casas Divinas</h2>
+
+`;
+
+DATOS.casas.forEach(casa=>{
+
+html+=`
+
+<div class="casa">
+
+<h3>
+
+${casa.icono} ${casa.nombre}
+
+</h3>
+
+<p>
+
+<b>Dios:</b>
+
+${casa.dios}
+
+</p>
+
+<p>
+
+${casa.descripcion}
+
+</p>
+
+`;
+
+if(casa.pasiva){
+
+html+=`
+
+<p>
+
+<b>Pasiva:</b>
+
+${casa.pasiva}
+
+</p>
+
+`;
+
+}
+
+if(casa.rango1){
+
+html+=`
+
+<ul>
+
+<li>🟢 ${casa.rango1}</li>
+
+<li>🔵 ${casa.rango2}</li>
+
+<li>🟡 ${casa.rango3}</li>
+
+<li>🔴 ${casa.rango4}</li>
+
+</ul>
+
+`;
+
+}
+
+html+=`
+
+</div>
+
+`;
+
+});
+
+contenido.innerHTML=html;
+
+}
+
+function mostrarGrupos(){
+
+let html=`
+
+<h2>🔗 Grupos Oficiales</h2>
+
+`;
+
+DATOS.grupos.forEach(grupo=>{
+
+html+=`
+
+<div class="grupo">
+
+<h3>${grupo.nombre}</h3>
+
+<a href="${grupo.link}" target="_blank">
+
+Entrar
+
+</a>
+
+</div>
+
+`;
+
+});
+
+contenido.innerHTML=html;
+
+}
+
+function mostrarRegistro(){
+
+contenido.innerHTML=`
+
 <h2>📜 Registro Oficial</h2>
-
-<p>Completa la siguiente información.</p>
 
 <input id="nombre" placeholder="Nombre completo">
 
 <input id="edad" placeholder="Edad">
 
+<input id="sexo" placeholder="Sexo">
+
+<input id="orientacion" placeholder="Orientación sexual">
+
 <input id="pais" placeholder="País">
 
 <select id="casa">
 
-<option>Selecciona tu Casa Divina</option>
-
-<option>Júpiter</option>
-
-<option>Juno</option>
-
-<option>Neptuno</option>
-
-<option>Marte</option>
-
-<option>Venus</option>
-
-<option>Mercurio</option>
-
-<option>Apolo</option>
-
-<option>Diana</option>
-
-<option>Minerva</option>
-
-<option>Vulcano</option>
-
-<option>Vesta</option>
-
-<option>Plutón</option>
+${DATOS.casas.map(c=>`<option>${c.nombre}</option>`).join("")}
 
 </select>
 
-<button id="copiarFicha">
+<textarea
+
+id="personalidad"
+
+placeholder="Personalidad"
+
+></textarea>
+
+<textarea
+
+id="gustos"
+
+placeholder="Gustos"
+
+></textarea>
+
+<textarea
+
+id="disgustos"
+
+placeholder="Disgustos"
+
+></textarea>
+
+<button id="copiar">
 
 📋 Copiar ficha
 
 </button>
-`,
 
-biblioteca:`
-<h2>📚 Biblioteca</h2>
+`;
 
-<p>Selecciona un tema.</p>
+document.getElementById("copiar").onclick=()=>{
 
-<div class="lista">
+const texto=
 
-<button class="tema">📖 Historia</button>
-
-<button class="tema">📜 Reglamento</button>
-
-<button class="tema">🎖️ Clases</button>
-
-<button class="tema">🏛️ Casas Divinas</button>
-
-<button class="tema">⚔️ Poderes</button>
-
-<button class="tema">💰 Economía</button>
-
-<button class="tema">🏪 Mercado</button>
-
-<button class="tema">🌍 Nueva Roma</button>
-
-</div>
-`,
-
-casas:`
-<h2>🏛️ Casas Divinas</h2>
-
-<p>Aquí aparecerán las doce Casas con su historia y poderes.</p>
-`,
-
-clases:`
-<h2>🎖️ Clases</h2>
-
-<ul>
-
-<li>Probati</li>
-
-<li>Legionario</li>
-
-<li>Centurión</li>
-
-<li>Campeón Divino</li>
-
-</ul>
-`,
-
-economia:`
-<h2>💰 Economía</h2>
-
-<p>Aquí aprenderás cómo ganar dinero y gastarlo dentro del Campamento.</p>
-`,
-
-mercado:`
-<h2>🏪 Mercado</h2>
-
-<p>Próximamente aparecerán todos los artículos disponibles.</p>
-`,
-
-roma:`
-<h2>🌍 Nueva Roma</h2>
-
-<p>Información sobre la ciudad donde viven los semidioses retirados.</p>
-`,
-
-reglamento:`
-<h2>📖 Reglamento</h2>
-
-<p>En la siguiente versión añadiremos el reglamento completo.</p>
-`,
-
-grupos:`
-<h2>🔗 Grupos Oficiales</h2>
-
-<p>Aquí aparecerán todos los enlaces de WhatsApp.</p>
-`
-
-};
-
-function cargar(nombre){
-
-contenido.innerHTML = paginas[nombre];
-
-const copiar = document.getElementById("copiarFicha");
-
-if(copiar){
-
-copiar.onclick = function(){
-
-const ficha =
 `🏛️ CAMPAMENTO VEX'HALIA
 
-Nombre: ${document.getElementById("nombre").value}
+Nombre: ${nombre.value}
 
-Edad: ${document.getElementById("edad").value}
+Edad: ${edad.value}
 
-País: ${document.getElementById("pais").value}
+Sexo: ${sexo.value}
 
-Casa: ${document.getElementById("casa").value}`;
+Orientación: ${orientacion.value}
 
-navigator.clipboard.writeText(ficha);
+País: ${pais.value}
 
-copiar.innerHTML="✅ Ficha copiada";
+Casa: ${casa.value}
+
+Personalidad:
+
+${personalidad.value}
+
+Gustos:
+
+${gustos.value}
+
+Disgustos:
+
+${disgustos.value}
+
+Lobby:
+
+${DATOS.lobby}`;
+
+navigator.clipboard.writeText(texto);
+
+alert("Ficha copiada.");
 
 };
 
 }
 
+document.querySelectorAll("#menu button").forEach(btn=>{
+
+btn.onclick=()=>{
+
+const s=btn.dataset.seccion;
+
+switch(s){
+
+case"inicio":
+
+inicio();
+
+break;
+
+case"biblioteca":
+
+mostrarBiblioteca();
+
+break;
+
+case"casas":
+
+mostrarCasas();
+
+break;
+
+case"registro":
+
+mostrarRegistro();
+
+break;
+
+case"grupos":
+
+mostrarGrupos();
+
+break;
+
+default:
+
+contenido.innerHTML="<h2>🚧 Próximamente</h2>";
+
 }
-
-document.querySelectorAll("#menu button").forEach(boton=>{
-
-boton.addEventListener("click",()=>{
-
-cargar(boton.getAttribute("data"));
-
-});
-
-});
-
-document.getElementById("abrirAlexios").onclick=()=>{
-
-cargar("alexios");
 
 };
 
-cargar("inicio");
+});
+
+inicio();
