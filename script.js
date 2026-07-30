@@ -1,25 +1,14 @@
-/*=========================================
- CAMPAMENTO VEX'HALIA
- script.js V1.0
-=========================================*/
-
-const contenido = document.getElementById("contenido");
+const contenido=document.getElementById("contenido");
 
 function inicio(){
 
 contenido.innerHTML=`
 
-<h2>🏛️ Bienvenido al Campamento Vex'Halia</h2>
+<h2>🏛️ Bienvenido</h2>
 
 <p>
 
-Bienvenido a los Archivos del Imperio.
-
-</p>
-
-<p>
-
-Selecciona una opción del menú para comenzar.
+Bienvenido al Sistema Oficial del Campamento Vex'Halia.
 
 </p>
 
@@ -27,29 +16,21 @@ Selecciona una opción del menú para comenzar.
 
 }
 
-function mostrarBiblioteca(){
+function mostrarCasas(){
 
-let html=`
+let html="<h2>🏛️ Casas Divinas</h2>";
 
-<h2>📚 Biblioteca</h2>
-
-<p>
-
-Selecciona un tema.
-
-</p>
-
-`;
-
-DATOS.biblioteca.forEach(libro=>{
+CASAS.forEach(c=>{
 
 html+=`
 
 <div class="tarjeta">
 
-<h3>${libro.titulo}</h3>
+<h3>${c.icono} ${c.nombre}</h3>
 
-<p>${libro.texto}</p>
+<p><b>Dios:</b> ${c.dios}</p>
+
+<p>${c.descripcion || "Próximamente..."}</p>
 
 </div>
 
@@ -61,79 +42,65 @@ contenido.innerHTML=html;
 
 }
 
-function mostrarCasas(){
+function mostrarBiblioteca(){
 
-let html=`
+let html="<h2>📚 Biblioteca</h2>";
 
-<h2>🏛️ Casas Divinas</h2>
-
-`;
-
-DATOS.casas.forEach(casa=>{
+BIBLIOTECA.forEach(b=>{
 
 html+=`
 
-<div class="casa">
+<div class="tarjeta">
 
-<h3>
+<h3>${b.icono} ${b.titulo}</h3>
 
-${casa.icono} ${casa.nombre}
+<p>${b.descripcion}</p>
 
-</h3>
-
-<p>
-
-<b>Dios:</b>
-
-${casa.dios}
-
-</p>
-
-<p>
-
-${casa.descripcion}
-
-</p>
+</div>
 
 `;
 
-if(casa.pasiva){
+});
 
-html+=`
-
-<p>
-
-<b>Pasiva:</b>
-
-${casa.pasiva}
-
-</p>
-
-`;
+contenido.innerHTML=html;
 
 }
 
-if(casa.rango1){
+function mostrarClases(){
+
+let html="<h2>🎖️ Clases</h2>";
+
+CLASES.forEach(c=>{
 
 html+=`
 
-<ul>
+<div class="tarjeta">
 
-<li>🟢 ${casa.rango1}</li>
+<h3>${c.nombre}</h3>
 
-<li>🔵 ${casa.rango2}</li>
+<p>${c.descripcion}</p>
 
-<li>🟡 ${casa.rango3}</li>
-
-<li>🔴 ${casa.rango4}</li>
-
-</ul>
+</div>
 
 `;
 
+});
+
+contenido.innerHTML=html;
+
 }
 
+function mostrarEconomia(){
+
+let html="<h2>💰 Economía</h2>";
+
+ECONOMIA.monedas.forEach(m=>{
+
 html+=`
+
+<div class="tarjeta">
+
+<h3>${m.icono} ${m.nombre}</h3>
 
 </div>
 
@@ -147,25 +114,17 @@ contenido.innerHTML=html;
 
 function mostrarGrupos(){
 
-let html=`
+let html="<h2>🔗 Grupos</h2>";
 
-<h2>🔗 Grupos Oficiales</h2>
-
-`;
-
-DATOS.grupos.forEach(grupo=>{
+GRUPOS.forEach(g=>{
 
 html+=`
 
-<div class="grupo">
+<div class="tarjeta">
 
-<h3>${grupo.nombre}</h3>
+<h3>${g.nombre}</h3>
 
-<a href="${grupo.link}" target="_blank">
-
-Entrar
-
-</a>
+<p>${g.descripcion}</p>
 
 </div>
 
@@ -179,97 +138,51 @@ contenido.innerHTML=html;
 
 function mostrarRegistro(){
 
-contenido.innerHTML=`
+let html="<h2>📜 Registro</h2>";
 
-<h2>📜 Registro Oficial</h2>
+REGISTRO.campos.forEach(campo=>{
 
-<input id="nombre" placeholder="Nombre completo">
+html+=`<label>${campo.titulo}</label>`;
 
-<input id="edad" placeholder="Edad">
+if(campo.tipo==="textarea"){
 
-<input id="sexo" placeholder="Sexo">
+html+=`<textarea></textarea>`;
 
-<input id="orientacion" placeholder="Orientación sexual">
+}
 
-<input id="pais" placeholder="País">
+else if(campo.tipo==="select"){
 
-<select id="casa">
+html+="<select>";
 
-${DATOS.casas.map(c=>`<option>${c.nombre}</option>`).join("")}
+campo.opciones.forEach(op=>{
 
-</select>
+html+=`<option>${op}</option>`;
 
-<textarea
+});
 
-id="personalidad"
+html+="</select>";
 
-placeholder="Personalidad"
+}
 
-></textarea>
+else{
 
-<textarea
+html+=`<input type="${campo.tipo}">`;
 
-id="gustos"
+}
 
-placeholder="Gustos"
+});
 
-></textarea>
+html+=`
 
-<textarea
+<button>
 
-id="disgustos"
-
-placeholder="Disgustos"
-
-></textarea>
-
-<button id="copiar">
-
-📋 Copiar ficha
+Enviar Solicitud
 
 </button>
 
 `;
 
-document.getElementById("copiar").onclick=()=>{
-
-const texto=
-
-`🏛️ CAMPAMENTO VEX'HALIA
-
-Nombre: ${nombre.value}
-
-Edad: ${edad.value}
-
-Sexo: ${sexo.value}
-
-Orientación: ${orientacion.value}
-
-País: ${pais.value}
-
-Casa: ${casa.value}
-
-Personalidad:
-
-${personalidad.value}
-
-Gustos:
-
-${gustos.value}
-
-Disgustos:
-
-${disgustos.value}
-
-Lobby:
-
-${DATOS.lobby}`;
-
-navigator.clipboard.writeText(texto);
-
-alert("Ficha copiada.");
-
-};
+contenido.innerHTML=html;
 
 }
 
@@ -277,13 +190,17 @@ document.querySelectorAll("#menu button").forEach(btn=>{
 
 btn.onclick=()=>{
 
-const s=btn.dataset.seccion;
-
-switch(s){
+switch(btn.dataset.menu){
 
 case"inicio":
 
 inicio();
+
+break;
+
+case"registro":
+
+mostrarRegistro();
 
 break;
 
@@ -299,9 +216,15 @@ mostrarCasas();
 
 break;
 
-case"registro":
+case"clases":
 
-mostrarRegistro();
+mostrarClases();
+
+break;
+
+case"economia":
+
+mostrarEconomia();
 
 break;
 
@@ -311,9 +234,11 @@ mostrarGrupos();
 
 break;
 
-default:
+case"alexios":
 
-contenido.innerHTML="<h2>🚧 Próximamente</h2>";
+contenido.innerHTML="<h2>🤖 Alexios llegará en la V2.0</h2>";
+
+break;
 
 }
 
