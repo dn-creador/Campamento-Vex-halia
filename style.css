@@ -1,7 +1,7 @@
-/* =======================================================
+/* ==========================================
    CAMPAMENTO VEX'HALIA
-   Versión 0.1
-======================================================= */
+   STYLE.CSS - V0.2
+========================================== */
 
 *{
     margin:0;
@@ -13,29 +13,47 @@ body{
 
     font-family:Georgia,serif;
 
-    background:
-    linear-gradient(rgba(30,20,10,.75),rgba(30,20,10,.75)),
-    url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80");
+    color:#f5ecd7;
 
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
+    background:#1f140d;
 
-    color:#f5e8c8;
+    min-height:100vh;
 
 }
 
-/* ================= HEADER ================= */
+/* Fondo */
+
+#fondo{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    linear-gradient(rgba(20,15,10,.75),rgba(20,15,10,.75)),
+    url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    z-index:-1;
+
+}
+
+/* Encabezado */
 
 header{
 
     text-align:center;
 
-    padding:50px 20px;
+    padding:45px 20px;
 
     background:rgba(0,0,0,.45);
 
-    border-bottom:4px solid #c9a227;
+    border-bottom:4px solid #c49b3a;
+
+    backdrop-filter:blur(4px);
 
 }
 
@@ -45,39 +63,39 @@ header h1{
 
     letter-spacing:3px;
 
+    color:#ffe9a8;
+
 }
 
 header p{
 
     margin-top:10px;
 
-    color:#e7d7a5;
+    color:#f0ddb2;
 
-    font-size:1.2rem;
+    font-size:1.1rem;
 
 }
 
-/* ================= CONTENIDO ================= */
+/* Contenedor */
 
 main{
 
-    width:90%;
-
-    max-width:1200px;
+    width:min(1200px,92%);
 
     margin:auto;
 
+    padding:40px 0;
+
 }
 
-/* ================= BIENVENIDA ================= */
+/* Bienvenida */
 
-#bienvenida{
+#inicio{
 
-    margin-top:40px;
+    background:rgba(244,230,189,.95);
 
-    background:rgba(245,232,200,.95);
-
-    color:#3d2d1f;
+    color:#3d2a1d;
 
     padding:35px;
 
@@ -85,11 +103,11 @@ main{
 
     text-align:center;
 
-    box-shadow:0 0 20px rgba(0,0,0,.35);
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
 
 }
 
-#bienvenida h2{
+#inicio h2{
 
     font-size:2rem;
 
@@ -97,73 +115,41 @@ main{
 
 }
 
-#bienvenida p{
+#inicio p{
+
+    margin-top:10px;
 
     line-height:1.8;
 
-    margin-bottom:12px;
-
 }
 
-/* ================= BOTÓN ALEXIOS ================= */
-
-#btnAlexios{
-
-    margin-top:20px;
-
-    background:#8b0000;
-
-    color:white;
-
-    border:none;
-
-    padding:15px 35px;
-
-    border-radius:12px;
-
-    font-size:1rem;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-#btnAlexios:hover{
-
-    background:#b8860b;
-
-    transform:scale(1.05);
-
-}
-
-/* ================= MENÚ ================= */
+/* Menú */
 
 #menu{
 
-    margin:50px 0;
-
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 
-    gap:20px;
+    gap:18px;
+
+    margin:40px 0;
 
 }
 
-.opcion{
+#menu button{
 
-    background:rgba(245,232,200,.96);
+    background:#efe2b5;
 
-    color:#3b2a1a;
+    color:#382415;
 
     border:none;
 
-    border-radius:15px;
+    border-radius:14px;
 
-    padding:25px;
+    padding:22px;
 
-    font-size:1.15rem;
+    font-size:1.05rem;
 
     font-weight:bold;
 
@@ -171,54 +157,94 @@ main{
 
     transition:.25s;
 
-    box-shadow:0 8px 15px rgba(0,0,0,.25);
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
 
 }
 
-.opcion:hover{
+#menu button:hover{
 
     transform:translateY(-6px);
 
-    background:#fff6d8;
+    background:#fff4d4;
 
 }
 
-/* ================= FOOTER ================= */
+/* Panel */
+
+#panel{
+
+    background:rgba(244,230,189,.97);
+
+    color:#352417;
+
+    border-radius:20px;
+
+    min-height:350px;
+
+    padding:35px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+#contenido h2{
+
+    margin-bottom:20px;
+
+    color:#5b2f08;
+
+}
+
+#contenido p{
+
+    line-height:1.8;
+
+}
+
+/* Footer */
 
 footer{
 
-    text-align:center;
+    margin-top:40px;
 
-    padding:30px;
+    padding:25px;
+
+    text-align:center;
 
     background:rgba(0,0,0,.45);
 
-    color:#e4d7b0;
+    color:#e9d7b4;
 
 }
 
-/* ================= CELULAR ================= */
+/* Responsive */
 
 @media(max-width:700px){
 
     header{
 
-        padding:35px 15px;
+        padding:30px 15px;
 
     }
 
-    #bienvenida{
+    #inicio{
 
         padding:25px;
 
     }
 
-    .opcion{
+    #panel{
 
-        font-size:1rem;
-
-        padding:20px;
+        padding:25px;
 
     }
 
-}
+    #menu button{
+
+        padding:18px;
+
+        font-size:1rem;
+
+    }
+
+   }
