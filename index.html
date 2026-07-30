@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Campamento Vex'Halia</title>
 
 <link rel="stylesheet" href="style.css">
@@ -19,7 +15,11 @@
 
 <header>
 
-<h1>🏛️ CAMPAMENTO VEX'HALIA</h1>
+<div class="logo">
+🏛️
+</div>
+
+<h1>CAMPAMENTO VEX'HALIA</h1>
 
 <p>Los Archivos del Imperio</p>
 
@@ -27,7 +27,7 @@
 
 <main>
 
-<section id="inicio">
+<section id="hero">
 
 <h2>Salve, semidiós.</h2>
 
@@ -39,33 +39,69 @@ Soy <strong>Alexios</strong>, Guardián de los Archivos.
 
 <p>
 
-Mi deber es preservar la historia y responder todas las dudas del Campamento.
+Custodio la historia, las leyes y el conocimiento del Campamento Vex'Halia.
 
 </p>
+
+<button id="abrirAlexios">
+
+🤖 Hablar con Alexios
+
+</button>
 
 </section>
 
 <nav id="menu">
 
-<button data-panel="alexios">🤖 Alexios</button>
+<button data="inicio">
+🏠
+<span>Inicio</span>
+</button>
 
-<button data-panel="registro">📜 Registro</button>
+<button data="registro">
+📜
+<span>Registro</span>
+</button>
 
-<button data-panel="biblioteca">📚 Biblioteca</button>
+<button data="biblioteca">
+📚
+<span>Biblioteca</span>
+</button>
 
-<button data-panel="casas">🏛️ Casas Divinas</button>
+<button data="casas">
+🏛️
+<span>Casas Divinas</span>
+</button>
 
-<button data-panel="clases">🎖️ Clases</button>
+<button data="clases">
+🎖️
+<span>Clases</span>
+</button>
 
-<button data-panel="economia">💰 Economía</button>
+<button data="mercado">
+🏪
+<span>Mercado</span>
+</button>
 
-<button data-panel="mercado">🏪 Mercado</button>
+<button data="economia">
+💰
+<span>Economía</span>
+</button>
 
-<button data-panel="roma">🌍 Nueva Roma</button>
+<button data="roma">
+🌍
+<span>Nueva Roma</span>
+</button>
 
-<button data-panel="reglamento">📖 Reglamento</button>
+<button data="reglamento">
+📖
+<span>Reglamento</span>
+</button>
 
-<button data-panel="grupos">🔗 Grupos</button>
+<button data="grupos">
+🔗
+<span>Grupos</span>
+</button>
 
 </nav>
 
@@ -77,7 +113,7 @@ Mi deber es preservar la historia y responder todas las dudas del Campamento.
 
 <p>
 
-Selecciona una opción del menú para comenzar.
+Selecciona una opción del menú para comenzar tu recorrido por el Campamento Vex'Halia.
 
 </p>
 
@@ -89,12 +125,15 @@ Selecciona una opción del menú para comenzar.
 
 <footer>
 
+<p>
+
 Campamento Vex'Halia © 2026
+
+</p>
 
 </footer>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
