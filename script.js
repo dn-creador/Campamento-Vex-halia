@@ -1,30 +1,52 @@
-import { db } from "./firebase/firebaseConfig.js";
-
-import { auth } from "./firebase/firebaseConfig.js";
-
 /*=========================================================
     CAMPAMENTO VEX'HALIA
-    SCRIPT.JS V1.1
+    SCRIPT.JS V2.0
     BLOQUE 1
 =========================================================*/
+
+/*=========================================
+ IMPORTACIONES
+=========================================*/
+
+import {
+
+    escucharSesion,
+
+    cerrarSesion,
+
+    usuarioActual,
+
+    obtenerRol,
+
+    haySesion
+
+} from "./firebase/auth.js";
+
+import {
+
+    obtenerMisPersonajes
+
+} from "./firebase/personajes.js";
 
 /*=========================================
  VARIABLES GLOBALES
 =========================================*/
 
-let usuarioActual = null;
 let personajeActual = null;
-let vistaActual = "inicio";
 
 const APP = {
 
-    version: "1.1",
+    version: "2.0",
 
     iniciada: false,
 
+    vista: "inicio",
+
     contenido: null,
 
-    menu: null
+    menu: null,
+
+    titulo: null
 
 };
 
@@ -32,329 +54,185 @@ const APP = {
  INICIO
 =========================================*/
 
-document.addEventListener("DOMContentLoaded", iniciarAplicacion);
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    iniciarAplicacion
+
+);
 
 function iniciarAplicacion(){
 
-    APP.contenido = document.getElementById("contenido");
-    APP.menu = document.getElementById("menu");
+    APP.contenido=document.getElementById("contenido");
 
-    cargarSesion();
-    cargarPersonajes();
+    APP.menu=document.getElementById("menu");
+
+    APP.titulo=document.getElementById("titulo");
+
+    escucharSesion(
+
+        actualizarAplicacion
+
+    );
+
+}
+
+/*=========================================
+ ACTUALIZAR APP
+=========================================*/
+
+async function actualizarAplicacion(){
 
     crearMenu();
 
     mostrarInicio();
 
-    APP.iniciada = true;
-
-    console.log("Campamento Vex'Halia V1.1 iniciado");
+    APP.iniciada=true;
 
 }
 
 /*=========================================
- SESIÓN
-=========================================*/
-
-function cargarSesion(){
-
-    const datos = localStorage.getItem("usuarioActual");
-
-    if(datos){
-
-        usuarioActual = JSON.parse(datos);
-
-    }
-
-}
-
-function guardarSesion(){
-
-    if(usuarioActual){
-
-        localStorage.setItem(
-
-            "usuarioActual",
-
-            JSON.stringify(usuarioActual)
-
-        );
-
-    }
-
-}
-
-function cerrarSesion(){
-
-    usuarioActual = null;
-
-    personajeActual = null;
-
-    localStorage.removeItem("usuarioActual");
-
-    mostrarInicio();
-
-}
-
-function obtenerRol(){
-
-    if(usuarioActual==null){
-
-        return "Invitado";
-
-    }
-
-    return usuarioActual.rol;
-
-}
-
-/*=========================================
- PERSONAJES
-=========================================*/
-
-function cargarPersonajes(){
-
-    const datos = localStorage.getItem("personajes");
-
-    if(datos){
-
-        PERSONAJES.splice(
-
-            0,
-
-            PERSONAJES.length,
-
-            ...JSON.parse(datos)
-
-        );
-
-    }
-
-}
-
-function guardarPersonajes(){
-
-    localStorage.setItem(
-
-        "personajes",
-
-        JSON.stringify(PERSONAJES)
-
-    );
-
-}
-
-function generarIDPersonaje(){
-
-    return "VXH-"+
-
-    String(
-
-        PERSONAJES.length+1
-
-    ).padStart(4,"0");
-
-}
-
-/*=========================================
- CUENTAS
-=========================================*/
-
-function obtenerPersonajesUsuario(){
-
-    if(usuarioActual==null){
-
-        return [];
-
-    }
-
-    return PERSONAJES.filter(
-
-        personaje=>{
-
-            return usuarioActual.personajes.includes(
-
-                personaje.id
-
-            );
-
-        }
-
-    );
-
-}
-
-function personajesAprobados(){
-
-    return obtenerPersonajesUsuario().filter(
-
-        personaje=>{
-
-            return personaje.estado==="Aprobado";
-
-        }
-
-    );
-
-}
-
-function limitePersonajes(){
-
-    const rol = obtenerRol();
-
-    switch(rol){
-
-        case "Administrador":
-
-            return CONFIG.personajes.maxAdmin;
-
-        case "Fundador":
-
-            return CONFIG.personajes.maxFundador;
-
-        default:
-
-            return CONFIG.personajes.maxCampista;
-
-    }
-
-}
-
-function puedeCrearPersonaje(){
-
-    return true;
-
-}
-
-function puedeAprobarOtro(){
-
-    return personajesAprobados().length
-
-        <
-
-        limitePersonajes();
-
-}
-
-/*=========================================
- UTILIDADES
-=========================================*/
-
-function cambiarVista(nombre){
-
-    vistaActual = nombre;
-
-}
-
-function limpiarContenido(){
-
-    APP.contenido.innerHTML="";
-
-}
-
-function crearTarjeta(titulo,contenido){
-
-    return `
-
-    <div class="tarjeta">
-
-        <h3>${titulo}</h3>
-
-        <p>${contenido}</p>
-
-    </div>
-
-    `;
-
-}
-
-function crearBoton(
-
-texto,
-
-clase="btn",
-
-id=""
-
-){
-
-    return `
-
-    <button
-
-    class="${clase}"
-
-    id="${id}">
-
-    ${texto}
-
-    </button>
-
-    `;
-
-}
-
-/*=========================================================
-    CAMPAMENTO VEX'HALIA
-    SCRIPT.JS V1.1
-    BLOQUE 2
-=========================================================*/
-
-/*=========================================
- MENÚ PRINCIPAL
+ MENÚ
 =========================================*/
 
 function crearMenu(){
 
     let html="";
 
-    html+=botonMenu("🏛️","Inicio","inicio");
-    html+=botonMenu("👤","Mi Perfil","perfil");
-    html+=botonMenu("📜","Registro","registro");
-    html+=botonMenu("📚","Biblioteca","biblioteca");
-    html+=botonMenu("🏛️","Casas","casas");
-    html+=botonMenu("🎖️","Clases","clases");
-    html+=botonMenu("💰","Economía","economia");
-    html+=botonMenu("🌍","Nueva Roma","roma");
-    html+=botonMenu("🔗","Grupos","grupos");
-    html+=botonMenu("🤖","Alexios","alexios");
+    html+=crearBotonMenu(
+
+        "🏛️",
+
+        "Inicio",
+
+        "inicio"
+
+    );
+
+    html+=crearBotonMenu(
+
+        "📚",
+
+        "Biblioteca",
+
+        "biblioteca"
+
+    );
+
+    html+=crearBotonMenu(
+
+        "🏛️",
+
+        "Casas",
+
+        "casas"
+
+    );
+
+    html+=crearBotonMenu(
+
+        "⚔️",
+
+        "Clases",
+
+        "clases"
+
+    );
+
+    html+=crearBotonMenu(
+
+        "🌍",
+
+        "Nueva Roma",
+
+        "roma"
+
+    );
+
+    html+=crearBotonMenu(
+
+        "🤖",
+
+        "Alexios",
+
+        "alexios"
+
+    );
+
+    if(haySesion()){
+
+        html+=crearBotonMenu(
+
+            "👤",
+
+            "Mi Perfil",
+
+            "perfil"
+
+        );
+
+    }
 
     if(
-        obtenerRol()=="Administrador" ||
+
+        obtenerRol()=="Administrador"
+
+        ||
+
         obtenerRol()=="Fundador"
+
     ){
 
-        html+=botonMenu(
+        html+=crearBotonMenu(
+
             "👑",
-            "Panel Admin",
+
+            "Administración",
+
             "admin"
+
         );
+
+    }
+
+    if(haySesion()){
+
+        html+=`
+
+        <button
+
+        class="menu-btn"
+
+        id="btnCerrarSesion">
+
+        🚪 Cerrar sesión
+
+        </button>
+
+        `;
 
     }
 
     APP.menu.innerHTML=html;
 
-    document.querySelectorAll(".menu-btn").forEach(
-
-        boton=>{
-
-            boton.onclick=()=>{
-
-                abrirVista(
-
-                    boton.dataset.vista
-
-                );
-
-            };
-
-        }
-
-    );
+    activarEventosMenu();
 
 }
 
-function botonMenu(icono,texto,vista){
+/*=========================================
+ BOTONES MENÚ
+=========================================*/
+
+function crearBotonMenu(
+
+    icono,
+
+    texto,
+
+    vista
+
+){
 
     return `
 
@@ -373,12 +251,72 @@ function botonMenu(icono,texto,vista){
 }
 
 /*=========================================
+ EVENTOS
+=========================================*/
+
+function activarEventosMenu(){
+
+    document
+
+    .querySelectorAll(".menu-btn")
+
+    .forEach(
+
+        boton=>{
+
+            if(
+
+                boton.dataset.vista
+
+            ){
+
+                boton.onclick=()=>{
+
+                    abrirVista(
+
+                        boton.dataset.vista
+
+                    );
+
+                };
+
+            }
+
+        }
+
+    );
+
+    const salir=
+
+    document.getElementById(
+
+        "btnCerrarSesion"
+
+    );
+
+    if(salir){
+
+        salir.onclick=async()=>{
+
+            await cerrarSesion();
+
+        };
+
+    }
+
+}
+
+/*=========================================
  NAVEGACIÓN
 =========================================*/
 
-function abrirVista(vista){
+function abrirVista(
 
-    cambiarVista(vista);
+    vista
+
+){
+
+    APP.vista=vista;
 
     switch(vista){
 
@@ -391,12 +329,6 @@ function abrirVista(vista){
         case "perfil":
 
             mostrarPerfil();
-
-        break;
-
-        case "registro":
-
-            mostrarRegistro();
 
         break;
 
@@ -418,21 +350,9 @@ function abrirVista(vista){
 
         break;
 
-        case "economia":
-
-            mostrarEconomia();
-
-        break;
-
         case "roma":
 
             mostrarNuevaRoma();
-
-        break;
-
-        case "grupos":
-
-            mostrarGrupos();
 
         break;
 
@@ -458,8 +378,6 @@ function abrirVista(vista){
 
 function mostrarInicio(){
 
-    limpiarContenido();
-
     APP.contenido.innerHTML=`
 
     <div class="tarjeta">
@@ -472,7 +390,7 @@ function mostrarInicio(){
 
         <p>
 
-        Bienvenido al sistema oficial.
+        Sistema Oficial V${APP.version}
 
         </p>
 
@@ -480,37 +398,81 @@ function mostrarInicio(){
 
     <div class="grid">
 
-        ${crearTarjeta(
+        <div class="tarjeta">
 
-            "📢 Noticias",
+            <h3>
 
-            "Próximamente aparecerán aquí los anuncios oficiales."
+            👤 Cuenta
 
-        )}
+            </h3>
 
-        ${crearTarjeta(
+            <p>
 
-            "👥 Jugadores",
+            ${
 
-            PERSONAJES.length+" personajes registrados."
+                haySesion()
 
-        )}
+                ?
 
-        ${crearTarjeta(
+                usuarioActual.nombre
 
-            "📚 Biblioteca",
+                :
 
-            "Consulta reglas, clases, economía e historia."
+                "Invitado"
 
-        )}
+            }
 
-        ${crearTarjeta(
+            </p>
 
-            "🤖 Alexios",
+        </div>
 
-            "Tu asistente del Campamento."
+        <div class="tarjeta">
 
-        )}
+            <h3>
+
+            🛡️ Rol
+
+            </h3>
+
+            <p>
+
+            ${obtenerRol()}
+
+            </p>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <h3>
+
+            🤖 Alexios
+
+            </h3>
+
+            <p>
+
+            Disponible próximamente.
+
+            </p>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <h3>
+
+            📢 Noticias
+
+            </h3>
+
+            <p>
+
+            Sin noticias nuevas.
+
+            </p>
+
+        </div>
 
     </div>
 
@@ -522,17 +484,15 @@ function mostrarInicio(){
  PERFIL
 =========================================*/
 
-function mostrarPerfil(){
+async function mostrarPerfil(){
 
-    limpiarContenido();
-
-    if(usuarioActual==null){
+    if(!haySesion()){
 
         APP.contenido.innerHTML=`
 
-        <div class="alerta alerta-info">
+        <div class="alerta">
 
-        Debes iniciar sesión para acceder a tu perfil.
+        Debes iniciar sesión.
 
         </div>
 
@@ -542,23 +502,23 @@ function mostrarPerfil(){
 
     }
 
-    const lista=obtenerPersonajesUsuario();
+    const personajes=
+
+    await obtenerMisPersonajes();
 
     let html=`
 
-    <div class="perfil">
+    <h2>
 
-    <div class="perfil-header">
+    👤 Mi Perfil
 
-    <div class="avatar">
+    </h2>
 
-    👤
+    <p>
 
-    </div>
+    ${usuarioActual.nombre}
 
-    <div class="info">
-
-    <h2>${usuarioActual.nombre}</h2>
+    </p>
 
     <p>
 
@@ -566,470 +526,349 @@ function mostrarPerfil(){
 
     </p>
 
-    <span class="badge oro">
-
-    ${usuarioActual.rol}
-
-    </span>
-
-    </div>
-
-    </div>
-
     <hr>
 
     <h3>
 
-    Mis Personajes
+    Mis personajes
 
     </h3>
 
     `;
 
-    if(lista.length===0){
+    personajes.forEach(
 
-        html+=`
-
-        <p>
-
-        No tienes personajes todavía.
-
-        </p>
-
-        `;
-
-    }else{
-
-        lista.forEach(personaje=>{
+        personaje=>{
 
             html+=`
 
             <div class="tarjeta">
 
-            <h3>
+                <h3>
 
-            ${personaje.nombre}
+                ${personaje.nombre}
 
-            </h3>
+                </h3>
 
-            <p>
+                <p>
 
-            Casa:
+                ${personaje.codigo}
 
-            ${personaje.casa}
+                </p>
 
-            </p>
+                <p>
 
-            <p>
+                ${personaje.estado}
 
-            Nivel:
-
-            ${personaje.nivel}
-
-            </p>
-
-            <p>
-
-            Estado:
-
-            ${personaje.estado}
-
-            </p>
+                </p>
 
             </div>
 
             `;
 
-        });
+        }
 
-    }
+    );
 
     html+=`
-
-    <br>
 
     <button
 
     class="btn"
 
-    id="nuevoPersonaje">
+    id="crearPersonaje">
 
-    ➕ Crear Personaje
+    ➕ Crear personaje
 
     </button>
-
-    </div>
 
     `;
 
     APP.contenido.innerHTML=html;
 
-    document.getElementById(
-
-        "nuevoPersonaje"
-
-    ).onclick=()=>{
-
-        mostrarRegistro();
-
-    };
-
-}
+                }
 
 /*=========================================================
-    SCRIPT.JS V1.1
-    BLOQUE 3
+    SCRIPT.JS V2.0
+    BLOQUE 2.1
+    LOGIN Y REGISTRO
 =========================================================*/
 
-/*=========================================
- SISTEMA DE MÓDULOS
-=========================================*/
+import {
 
-const Modulos={
+    registrarUsuario,
 
-    auth:null,
+    iniciarSesion
 
-    personajes:null,
-
-    admin:null,
-
-    alexios:null,
-
-    ui:null
-
-};
+} from "./firebase/auth.js";
 
 /*=========================================
- REGISTRO DE MÓDULOS
+ LOGIN
 =========================================*/
 
-function registrarModulo(nombre,objeto){
+function mostrarLogin(){
 
-    Modulos[nombre]=objeto;
+    APP.contenido.innerHTML=`
+
+    <div class="login-box">
+
+        <h2>
+
+        🔐 Iniciar sesión
+
+        </h2>
+
+        <input
+            id="loginCorreo"
+            type="email"
+            placeholder="Correo electrónico"
+        >
+
+        <input
+            id="loginPassword"
+            type="password"
+            placeholder="Contraseña"
+        >
+
+        <button
+            class="btn"
+            id="btnLogin">
+
+            Entrar
+
+        </button>
+
+        <hr>
+
+        <button
+            class="btn-secundario"
+            id="btnIrRegistro">
+
+            Crear cuenta
+
+        </button>
+
+    </div>
+
+    `;
+
+    document
+    .getElementById("btnLogin")
+    .onclick=loginUsuario;
+
+    document
+    .getElementById("btnIrRegistro")
+    .onclick=mostrarRegistro;
 
 }
 
 /*=========================================
- PANEL ADMIN
+ REGISTRO
 =========================================*/
 
-function mostrarPanelAdmin(){
+function mostrarRegistro(){
 
-    limpiarContenido();
+    APP.contenido.innerHTML=`
 
-    if(
+    <div class="login-box">
 
-        obtenerRol()!="Administrador"
+        <h2>
 
-        &&
+        👤 Crear cuenta
 
-        obtenerRol()!="Fundador"
+        </h2>
 
-    ){
+        <input
+            id="registroNombre"
+            placeholder="Nombre completo"
+        >
 
-        APP.contenido.innerHTML=`
+        <input
+            id="registroCorreo"
+            type="email"
+            placeholder="Correo electrónico"
+        >
 
-        <div class="alerta alerta-error">
+        <input
+            id="registroPassword"
+            type="password"
+            placeholder="Contraseña"
+        >
 
-        No tienes permisos para acceder.
+        <input
+            id="registroPassword2"
+            type="password"
+            placeholder="Confirmar contraseña"
+        >
 
-        </div>
+        <button
+            class="btn"
+            id="btnRegistrar">
 
-        `;
+            Crear cuenta
+
+        </button>
+
+        <hr>
+
+        <button
+            class="btn-secundario"
+            id="btnVolverLogin">
+
+            Ya tengo cuenta
+
+        </button>
+
+    </div>
+
+    `;
+
+    document
+    .getElementById("btnRegistrar")
+    .onclick=crearCuenta;
+
+    document
+    .getElementById("btnVolverLogin")
+    .onclick=mostrarLogin;
+
+}
+
+/*=========================================
+ CREAR CUENTA
+=========================================*/
+
+async function crearCuenta(){
+
+    const nombre=document
+    .getElementById("registroNombre")
+    .value.trim();
+
+    const correo=document
+    .getElementById("registroCorreo")
+    .value.trim();
+
+    const password=document
+    .getElementById("registroPassword")
+    .value;
+
+    const password2=document
+    .getElementById("registroPassword2")
+    .value;
+
+    if(nombre==""){
+
+        alert("Escribe tu nombre.");
 
         return;
 
     }
 
-    APP.contenido.innerHTML=`
+    if(correo==""){
 
-    <h2>
+        alert("Escribe un correo.");
 
-    👑 Panel Administrativo
-
-    </h2>
-
-    <div class="admin-panel">
-
-        <div class="admin-card">
-
-            <h3>📥 Solicitudes</h3>
-
-            <p>
-
-            Revisar personajes pendientes.
-
-            </p>
-
-            <button
-
-            class="btn"
-
-            onclick="mostrarSolicitudes()">
-
-            Abrir
-
-            </button>
-
-        </div>
-
-        <div class="admin-card">
-
-            <h3>👥 Jugadores</h3>
-
-            <p>
-
-            Ver todas las cuentas.
-
-            </p>
-
-            <button
-
-            class="btn"
-
-            onclick="mostrarJugadores()">
-
-            Abrir
-
-            </button>
-
-        </div>
-
-        <div class="admin-card">
-
-            <h3>🏛️ Casas</h3>
-
-            <p>
-
-            Administrar información.
-
-            </p>
-
-        </div>
-
-        <div class="admin-card">
-
-            <h3>📚 Biblioteca</h3>
-
-            <p>
-
-            Editar artículos.
-
-            </p>
-
-        </div>
-
-        <div class="admin-card">
-
-            <h3>🤖 Alexios</h3>
-
-            <p>
-
-            Configuración.
-
-            </p>
-
-        </div>
-
-        <div class="admin-card">
-
-            <h3>⚙️ Sistema</h3>
-
-            <p>
-
-            Configuración general.
-
-            </p>
-
-        </div>
-
-    </div>
-
-    `;
-
-}
-
-/*=========================================
- SOLICITUDES
-=========================================*/
-
-function mostrarSolicitudes(){
-
-    limpiarContenido();
-
-    const pendientes=PERSONAJES.filter(
-
-        personaje=>personaje.estado=="Pendiente"
-
-    );
-
-    let html=`
-
-    <h2>
-
-    📥 Solicitudes
-
-    </h2>
-
-    `;
-
-    if(pendientes.length===0){
-
-        html+=`
-
-        <div class="alerta alerta-ok">
-
-        No existen solicitudes pendientes.
-
-        </div>
-
-        `;
+        return;
 
     }
 
-    pendientes.forEach(personaje=>{
+    if(password.length<6){
 
-        html+=`
+        alert("La contraseña debe tener mínimo 6 caracteres.");
 
-        <div class="tarjeta">
+        return;
 
-            <h3>
+    }
 
-            ${personaje.nombre}
+    if(password!=password2){
 
-            </h3>
+        alert("Las contraseñas no coinciden.");
 
-            <p>
+        return;
 
-            Casa:
+    }
 
-            ${personaje.casa}
+    const respuesta=await registrarUsuario({
 
-            </p>
+        nombre:nombre,
 
-            <p>
+        correo:correo,
 
-            Propietario:
-
-            ${personaje.propietario}
-
-            </p>
-
-            <br>
-
-            <button
-
-            class="btn-verde"
-
-            onclick="aprobarPersonaje('${personaje.id}')">
-
-            Aprobar
-
-            </button>
-
-            <button
-
-            class="btn-rojo"
-
-            onclick="rechazarPersonaje('${personaje.id}')">
-
-            Rechazar
-
-            </button>
-
-        </div>
-
-        `;
+        password:password
 
     });
 
-    APP.contenido.innerHTML=html;
+    if(respuesta.ok){
+
+        alert(
+
+            "Cuenta creada correctamente."
+
+        );
+
+        mostrarLogin();
+
+    }else{
+
+        alert(respuesta.error);
+
+    }
 
 }
 
 /*=========================================
- APROBACIONES
+ LOGIN
 =========================================*/
 
-function aprobarPersonaje(id){
+async function loginUsuario(){
 
-    alert(
+    const correo=document
+    .getElementById("loginCorreo")
+    .value.trim();
 
-    "En el siguiente bloque se conectará con la base de datos."
+    const password=document
+    .getElementById("loginPassword")
+    .value;
+
+    if(correo==""){
+
+        alert("Escribe tu correo.");
+
+        return;
+
+    }
+
+    if(password==""){
+
+        alert("Escribe tu contraseña.");
+
+        return;
+
+    }
+
+    const respuesta=await iniciarSesion(
+
+        correo,
+
+        password
 
     );
 
-}
+    if(respuesta.ok){
 
-function rechazarPersonaje(id){
+        alert(
 
-    alert(
+            "Bienvenido a Vex'Halia."
 
-    "En el siguiente bloque se conectará con la base de datos."
+        );
 
-    );
+    }else{
 
-}
+        alert(
 
-/*=========================================
- CUENTAS
-=========================================*/
+            respuesta.error
 
-function mostrarJugadores(){
+        );
 
-    limpiarContenido();
+    }
 
-    let html=`
-
-    <h2>
-
-    👥 Cuentas
-
-    </h2>
-
-    <table>
-
-    <tr>
-
-    <th>Nombre</th>
-
-    <th>Correo</th>
-
-    <th>Rol</th>
-
-    <th>Personajes</th>
-
-    </tr>
-
-    `;
-
-    USUARIOS.forEach(usuario=>{
-
-        html+=`
-
-        <tr>
-
-        <td>${usuario.nombre}</td>
-
-        <td>${usuario.correo}</td>
-
-        <td>${usuario.rol}</td>
-
-        <td>${usuario.personajes.length}</td>
-
-        </tr>
-
-        `;
-
-    });
-
-    html+=`
-
-    </table>
-
-    `;
-
-    APP.contenido.innerHTML=html;
-
-}
-
+    }
