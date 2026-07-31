@@ -3,89 +3,225 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Campamento Vex'Halia</title>
+    <title>Campamento Vex'Halia</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/logo.png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<div id="fondo"></div>
+<div id="app">
 
-<header>
+    <!-- ========= SIDEBAR ========= -->
 
-<div class="logo">
+    <aside class="sidebar">
 
-<h1>🏛️ Campamento Vex'Halia</h1>
+        <div class="logo">
 
-<p>Los Archivos del Imperio</p>
+            <img src="images/logo.png" alt="Logo">
+
+            <div>
+
+                <h2>Vex'Halia</h2>
+
+                <span>Campamento Oficial</span>
+
+            </div>
+
+        </div>
+
+        <nav id="menu">
+
+            <!-- El menú será generado por JavaScript -->
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <small>Versión 3.0</small>
+
+        </div>
+
+    </aside>
+
+    <!-- ========= CONTENIDO ========= -->
+
+    <main class="main">
+
+        <!-- Barra superior -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button id="btnMenu">
+
+                    ☰
+
+                </button>
+
+                <h1 id="tituloPagina">
+
+                    Inicio
+
+                </h1>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <button id="btnNotificaciones">
+
+                    🔔
+
+                </button>
+
+                <button id="btnAlexios">
+
+                    🤖 Alexios
+
+                </button>
+
+                <div id="usuarioPanel">
+
+                    Invitado
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- Dashboard -->
+
+        <section id="contenido">
+
+            <div class="dashboard">
+
+                <div class="welcome-card">
+
+                    <h2>
+
+                        Bienvenido al Campamento Vex'Halia
+
+                    </h2>
+
+                    <p>
+
+                        Sistema Oficial del Campamento.
+
+                    </p>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="card">
+
+                        <h3>👤 Usuario</h3>
+
+                        <span id="cardUsuario">
+
+                            Invitado
+
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>📜 Personajes</h3>
+
+                        <span id="cardPersonajes">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>🏛 Casa</h3>
+
+                        <span id="cardCasa">
+
+                            —
+
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>📢 Noticias</h3>
+
+                        <span id="cardNoticias">
+
+                            Sin novedades
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
-</header>
+<!-- ========= MODAL ========= -->
 
-<div id="contenedor">
+<div id="modal" class="modal oculto">
 
-<nav id="menu">
+    <div class="modal-content">
 
-<button data-menu="inicio">🏠 Inicio</button>
+        <button id="cerrarModal">
 
-<button data-menu="registro">📜 Registro</button>
+            ✖
 
-<button data-menu="biblioteca">📚 Biblioteca</button>
+        </button>
 
-<button data-menu="casas">🏛️ Casas Divinas</button>
+        <div id="modalBody">
 
-<button data-menu="clases">🎖️ Clases</button>
+        </div>
 
-<button data-menu="economia">💰 Economía</button>
-
-<button data-menu="grupos">🔗 Grupos</button>
-
-<button data-menu="alexios">🤖 Alexios</button>
-
-</nav>
-
-<main id="contenido">
-
-</main>
+    </div>
 
 </div>
 
-<footer>
+<!-- ========= LOADER ========= -->
 
-Campamento Vex'Halia © 2026
+<div id="loader" class="loader oculto">
 
-</footer>
+    <div class="spinner"></div>
 
-<script src="data/casas.js"></script>
+    <p>
 
-<script src="data/biblioteca.js"></script>
+        Cargando...
 
-<script src="data/grupos.js"></script>
+    </p>
 
-<script src="data/registro.js"></script>
+</div>
 
-<script src="data/clases.js"></script>
-
-<script src="data/economia.js"></script>
-
-<script src="data/personajes.js"></script>
-
-<script src="data/rangos.js"></script>
-
-<script src="data/admin.js"></script>
-
-<script src="data/config.js"></script>
-
-<script src="data/usuarios.js"></script>
-  
-<script type="module" src="script.js"></script>
+<script type="module" src="js/app.js"></script>
 
 </body>
 
