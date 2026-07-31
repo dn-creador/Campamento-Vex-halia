@@ -1,3 +1,7 @@
+import { db } from "./firebase/firebaseConfig.js";
+
+import { auth } from "./firebase/firebaseConfig.js";
+
 /*=========================================================
     CAMPAMENTO VEX'HALIA
     SCRIPT.JS V1.1
