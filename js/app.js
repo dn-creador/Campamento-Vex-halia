@@ -1,498 +1,163 @@
-/*==================================================
-    CAMPAMENTO VEX'HALIA V3
-    APP.JS
-==================================================*/
+import {
+    escucharSesion,
+    iniciarSesion,
+    registrarUsuario,
+    cerrarSesion,
+    usuarioActual,
+    datosUsuario
+} from "./firebase/auth.js";
 
-const APP = {
+import {
+    mostrarPerfil
+} from "./modules/perfil.js";
 
-    nombre: "Campamento Vex'Halia",
-
-    version: "3.0",
-
-    usuario: null,
-
-    rol: "Invitado",
-
-    vistaActual: "inicio"
-
-};
-
-/*==================================================
-    MENÚ PRINCIPAL
-==================================================*/
-
-const MENU = [
-
-{
-    id:"inicio",
-    icono:"🏠",
-    texto:"Inicio"
-},
-
-{
-    id:"perfil",
-    icono:"👤",
-    texto:"Mi Perfil"
-},
-
-{
-    id:"personajes",
-    icono:"📜",
-    texto:"Personajes"
-},
-
-{
-    id:"biblioteca",
-    icono:"📚",
-    texto:"Biblioteca"
-},
-
-{
-    id:"casas",
-    icono:"🏛️",
-    texto:"Casas Divinas"
-},
-
-{
-    id:"clases",
-    icono:"⚔️",
-    texto:"Clases"
-},
-
-{
-    id:"eventos",
-    icono:"📅",
-    texto:"Eventos"
-},
-
-{
-    id:"economia",
-    icono:"💰",
-    texto:"Economía"
-},
-
-{
-    id:"inventario",
-    icono:"🎒",
-    texto:"Inventario"
-},
-
-{
-    id:"alexios",
-    icono:"🤖",
-    texto:"Alexios"
-}
-
-];
-
-/*==================================================
+/*==========================================
     INICIO
-==================================================*/
+==========================================*/
 
-window.addEventListener(
+window.addEventListener("DOMContentLoaded", iniciar);
 
-    "DOMContentLoaded",
+function iniciar(){
 
-    iniciarApp
-
-);
-
-function iniciarApp(){
-
-    crearMenu();
-
-    abrirVista("inicio");
-
-    activarBotones();
+    escucharSesion(cambiarEstadoSesion);
 
 }
 
-/*==================================================
-    MENÚ
-==================================================*/
+/*==========================================
+    CAMBIO DE SESIÓN
+==========================================*/
 
-function crearMenu(){
+async function cambiarEstadoSesion(usuario,datos){
 
-    const menu=document.getElementById("menu");
+    if(usuario){
 
-    menu.innerHTML="";
+        document.getElementById("usuarioPanel").textContent=datos.nombre;
 
-    MENU.forEach(item=>{
+        await mostrarPerfil();
 
-        const boton=document.createElement("button");
+    }else{
 
-        boton.className="menu-item";
-
-        boton.dataset.vista=item.id;
-
-        boton.innerHTML=`
-
-            <span>${item.icono}</span>
-
-            <span>${item.texto}</span>
-
-        `;
-
-        boton.onclick=()=>{
-
-            abrirVista(item.id);
-
-        };
-
-        menu.appendChild(boton);
-
-    });
-
-}
-
-/*==================================================
-    NAVEGACIÓN
-==================================================*/
-
-function abrirVista(vista){
-
-    APP.vistaActual=vista;
-
-    document
-
-    .querySelectorAll(".menu-item")
-
-    .forEach(btn=>{
-
-        btn.classList.remove("active");
-
-        if(btn.dataset.vista==vista){
-
-            btn.classList.add("active");
-
-        }
-
-    });
-
-    cambiarTitulo(vista);
-
-    cargarVista(vista);
-
-}
-
-/*==================================================
-    TÍTULO
-==================================================*/
-
-function cambiarTitulo(vista){
-
-    const nombres={
-
-        inicio:"Inicio",
-
-        perfil:"Mi Perfil",
-
-        personajes:"Personajes",
-
-        biblioteca:"Biblioteca",
-
-        casas:"Casas Divinas",
-
-        clases:"Clases",
-
-        eventos:"Eventos",
-
-        economia:"Economía",
-
-        inventario:"Inventario",
-
-        alexios:"Alexios"
-
-    };
-
-    document.getElementById("tituloPagina").textContent=nombres[vista];
-
-}
-
-/*==================================================
-    CONTENIDO
-==================================================*/
-
-function cargarVista(vista){
-
-    const contenido=document.getElementById("contenido");
-
-    switch(vista){
-
-        case "inicio":
-
-            contenido.innerHTML=`
-
-                <div class="welcome-card">
-
-                    <h2>
-
-                        Bienvenido a Vex'Halia
-
-                    </h2>
-
-                    <p>
-
-                        Sistema Oficial del Campamento.
-
-                    </p>
-
-                </div>
-
-            `;
-
-        break;
-
-        case "perfil":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    👤 Perfil
-
-                </h2>
-
-                <p>
-
-                    Próximamente.
-
-                </p>
-
-            `;
-
-        break;
-
-        case "personajes":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    📜 Personajes
-
-                </h2>
-
-                <button class="btn">
-
-                    Crear Personaje
-
-                </button>
-
-            `;
-
-        break;
-
-        case "biblioteca":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    📚 Biblioteca
-
-                </h2>
-
-                <p>
-
-                    Aquí aparecerán los documentos oficiales.
-
-                </p>
-
-            `;
-
-        break;
-
-        case "casas":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    🏛️ Casas Divinas
-
-                </h2>
-
-                <p>
-
-                    Próximamente.
-
-                </p>
-
-            `;
-
-        break;
-
-        case "clases":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    ⚔️ Clases
-
-                </h2>
-
-            `;
-
-        break;
-
-        case "eventos":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    📅 Eventos
-
-                </h2>
-
-            `;
-
-        break;
-
-        case "economia":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    💰 Economía
-
-                </h2>
-
-            `;
-
-        break;
-
-        case "inventario":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    🎒 Inventario
-
-                </h2>
-
-            `;
-
-        break;
-
-        case "alexios":
-
-            contenido.innerHTML=`
-
-                <h2>
-
-                    🤖 Alexios
-
-                </h2>
-
-                <div class="card">
-
-                    <p>
-
-                        Hola.
-
-                        Soy Alexios.
-
-                        Muy pronto podré ayudarte con el Campamento.
-
-                    </p>
-
-                </div>
-
-            `;
-
-        break;
+        mostrarLogin();
 
     }
 
 }
 
-/*==================================================
-    BOTONES SUPERIORES
-==================================================*/
+/*==========================================
+    LOGIN
+==========================================*/
 
-function activarBotones(){
+function mostrarLogin(){
+
+    const contenido=document.getElementById("contenido");
+
+    contenido.innerHTML=`
+
+    <div class="card" style="max-width:500px;margin:auto;">
+
+        <h2>Campamento Vex'Halia</h2>
+
+        <br>
+
+        <input
+            id="correo"
+            placeholder="Correo">
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Contraseña">
+
+        <button
+            class="btn"
+            id="btnLogin">
+
+            Iniciar sesión
+
+        </button>
+
+        <br><br>
+
+        <button
+            class="btn"
+            id="btnRegistro">
+
+            Crear cuenta
+
+        </button>
+
+    </div>
+
+    `;
 
     document
-
-    .getElementById("btnMenu")
-
-    .onclick=()=>{
-
-        document
-
-        .querySelector(".sidebar")
-
-        .classList.toggle("open");
-
-    };
+    .getElementById("btnLogin")
+    .onclick=login;
 
     document
-
-    .getElementById("cerrarModal")
-
-    .onclick=()=>{
-
-        document
-
-        .getElementById("modal")
-
-        .classList.add("oculto");
-
-    };
+    .getElementById("btnRegistro")
+    .onclick=registro;
 
 }
 
-/*==================================================
-    UTILIDADES
-==================================================*/
+/*==========================================
+    LOGIN
+==========================================*/
 
-export function abrirModal(html){
+async function login(){
 
-    document
+    const correo=document.getElementById("correo").value;
 
-    .getElementById("modalBody")
+    const password=document.getElementById("password").value;
 
-    .innerHTML=html;
+    const resultado=await iniciarSesion(
 
-    document
+        correo,
 
-    .getElementById("modal")
+        password
 
-    .classList.remove("oculto");
+    );
 
-}
+    if(!resultado.ok){
 
-export function cerrarModal(){
+        alert(resultado.mensaje);
 
-    document
-
-    .getElementById("modal")
-
-    .classList.add("oculto");
+    }
 
 }
 
-export function mostrarLoader(){
+/*==========================================
+    REGISTRO
+==========================================*/
 
-    document
+async function registro(){
 
-    .getElementById("loader")
+    const nombre=prompt("Nombre:");
 
-    .classList.remove("oculto");
+    if(!nombre)return;
+
+    const correo=document.getElementById("correo").value;
+
+    const password=document.getElementById("password").value;
+
+    const resultado=await registrarUsuario(
+
+        nombre,
+
+        correo,
+
+        password
+
+    );
+
+    if(resultado.ok){
+
+        alert("Cuenta creada correctamente.");
+
+    }else{
+
+        alert(resultado.mensaje);
+
+    }
 
 }
-
-export function ocultarLoader(){
-
-    document
-
-    .getElementById("loader")
-
-    .classList.add("oculto");
-
-      }
