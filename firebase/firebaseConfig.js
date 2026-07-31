@@ -1,12 +1,13 @@
-//======================================
-// FIREBASE VEX'HALIA
-//======================================
+/*==================================================
+    CAMPAMENTO VEX'HALIA
+    FIREBASE CONFIG V2.0
+==================================================*/
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
 
@@ -26,8 +27,18 @@ const firebaseConfig = {
 
 };
 
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+const auth = getAuth(app);
 
-export const auth = getAuth(app);
+const db = getFirestore(app);
+
+export {
+
+    app,
+
+    auth,
+
+    db
+
+};
